@@ -106,19 +106,18 @@ public class AVLTree extends BSTree {
         if(target.right == null && target.left == null){
             if(right) target.parent.right = null;
             else target.parent.left = null;
-            target.parent = null;
             return true;
         }
         if(target.right == null){
             if(right) target.parent.right = target.left;
             else target.parent.left = target.left;
-            target.left.parent = target.parent;target.left = null;target.parent = null;
+            target.left.parent = target.parent;target.left = null;
             return true;
         }
         if(target.left == null){
             if(right) target.parent.right = target.right;
             else target.parent.left = target.right;
-            target.right.parent = target.parent;target.right = null;target.parent = null;
+            target.right.parent = target.parent;target.right = null;
             return true;
         }
         return false;
@@ -179,7 +178,7 @@ public class AVLTree extends BSTree {
     public boolean Delete(Dictionary e)
     {
         if(e == null) return false;if(this == null) return false;if(this.parent == null && this.right == null) return false;
-        AVLTree curr = this.getRoot();if(curr.parent == null) curr = curr.right;
+        AVLTree curr = this.getRoot(), root = curr;if(curr.parent == null) curr = curr.right;
         AVLTree target = findNode(curr, e, false);
         if(target == null) return false;
         curr = target.parent;
@@ -188,7 +187,9 @@ public class AVLTree extends BSTree {
             target.key = succ.key;target.address = succ.address; target.size = succ.size;
             curr = succ.parent;deleteEndNode(succ);succ = null;
         }
-        else target = null;
+        else{
+            if(target != this) target.parent = null;
+        }
         curr = propagate(curr);
         while(curr != null){
             boolean left1 = true, left2 = true;
@@ -240,7 +241,7 @@ public class AVLTree extends BSTree {
 
     public AVLTree getNext()
     {
-        if(this == null) return null;if(this.parent == null) return null;
+        if(this == null) return null;if(this.parent == null) return this.getFirst();
         if(this.right != null) return findMin(this.right);
         AVLTree curr = this;
         while(curr.parent != null){if(curr.parent.left == curr) return curr.parent;curr = curr.parent;}

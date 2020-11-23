@@ -83,21 +83,21 @@ public class BSTree extends Tree {
         if(target.right == null && target.left == null){
             if(right) target.parent.right = null;
             else target.parent.left = null;
-            target.parent = null;target = null;
+            target = null;
             return true;
         }
         if(target.right == null){
             if(right) target.parent.right = target.left;
             else target.parent.left = target.left;
             target.left.parent = target.parent;
-            target.left = null;target.parent = null;target = null;
+            target.left = null;target = null;
             return true;
         }
         if(target.left == null){
             if(right) target.parent.right = target.right;
             else target.parent.left = target.right;
             target.right.parent = target.parent;
-            target.right = null;target.parent = null;target = null;
+            target.right = null;target = null;
             return true;
         }
         return false;
@@ -136,11 +136,14 @@ public class BSTree extends Tree {
         if(e == null) return false;
         if(this == null) return false;
         if(this.parent == null && this.right == null) return false;
-        BSTree curr = this.getRoot();
+        BSTree curr = this.getRoot(), root = curr;
         if(curr.parent == null) curr = curr.right;
         BSTree target = findNode(curr, e, false);
         if(target == null) return false;
-        if(deleteEndNode(target)) return true;
+        if(deleteEndNode(target)){
+            if(target != this) target.parent = null;
+            return true;
+        }
         BSTree succ = findMin(target.right);
         target.key = succ.key;target.address = succ.address; target.size = succ.size;
         return deleteEndNode(succ);
@@ -167,7 +170,7 @@ public class BSTree extends Tree {
     public BSTree getNext()
     { 
         if(this == null) return null;
-        if(this.parent == null) return null;
+        if(this.parent == null) return this.getFirst();
         if(this.right != null) return findMin(this.right);
         BSTree curr = this;
         while(curr.parent != null){

@@ -3,8 +3,8 @@
 
 public class A1List extends List {
 
-    private A1List  next; // Next Node
-    private A1List prev;  // Previous Node 
+    public A1List  next; // Next Node
+    public A1List prev;  // Previous Node 
 
     public A1List(int address, int size, int key) { 
         super(address, size, key);
