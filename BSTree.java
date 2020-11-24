@@ -170,7 +170,7 @@ public class BSTree extends Tree {
     public BSTree getNext()
     { 
         if(this == null) return null;
-        if(this.parent == null) return this.getFirst();
+        if(this.parent == null) return null;
         if(this.right != null) return findMin(this.right);
         BSTree curr = this;
         while(curr.parent != null){

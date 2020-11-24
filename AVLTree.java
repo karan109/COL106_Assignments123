@@ -241,7 +241,7 @@ public class AVLTree extends BSTree {
 
     public AVLTree getNext()
     {
-        if(this == null) return null;if(this.parent == null) return this.getFirst();
+        if(this == null) return null;if(this.parent == null) return null;
         if(this.right != null) return findMin(this.right);
         AVLTree curr = this;
         while(curr.parent != null){if(curr.parent.left == curr) return curr.parent;curr = curr.parent;}
