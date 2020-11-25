@@ -64,7 +64,7 @@ public class AVLTree extends BSTree {
         if(temp != null) temp.parent = curr;
         return curr.parent;
     }
-    private AVLTree findMin(AVLTree curr){if(curr.left != null) return findMin(curr.left);return curr;}
+    private AVLTree findMin(AVLTree curr){if(curr==null)return null;if(curr.left != null) return findMin(curr.left);return curr;}
     private AVLTree findGreater(AVLTree curr, int key){
         if(curr == null) return null;
         if(curr.key < key) return findGreater(curr.right, key);
@@ -178,7 +178,7 @@ public class AVLTree extends BSTree {
     public boolean Delete(Dictionary e)
     {
         if(e == null) return false;if(this == null) return false;if(this.parent == null && this.right == null) return false;
-        AVLTree curr = this.getRoot(), root = curr;if(curr.parent == null) curr = curr.right;
+        AVLTree curr = this.getRoot(), root = curr;if(curr.right == null) return false;if(curr.parent == null) curr = curr.right;
         AVLTree target = findNode(curr, e, false);
         if(target == null) return false;
         curr = target.parent;
@@ -228,15 +228,16 @@ public class AVLTree extends BSTree {
     public AVLTree Find(int k, boolean exact)
     {
         if(this == null) return null;if(this.parent == null && this.right == null) return null;
-        AVLTree curr = this.getRoot();if(curr.parent == null) curr = curr.right;
+        AVLTree curr = this.getRoot();if(curr.right == null) return null;if(curr.parent == null) curr = curr.right;
         if(!exact) return findGreater(curr, k); else return findExactKey(curr, k);
     }
 
     public AVLTree getFirst()
     {
         if(this == null) return null;if(this.parent == null && this.right == null) return null;
-        AVLTree curr = this.getRoot();if(curr.parent == null) curr = curr.right;
-        return findMin(curr);
+        AVLTree curr = this.getRoot();if(curr.right == null) return null;if(curr.parent == null) curr = curr.right;
+        if(curr != null) return findMin(curr);
+        return null;
     }
 
     public AVLTree getNext()
@@ -265,7 +266,7 @@ public class AVLTree extends BSTree {
         if(curr.key != -1 || curr.address != -1 || curr.size != -1) return false; // Sentinel node values are checked
         if(curr.left != null) return false; // Sentinel node has no left pointer
         if(curr.right == null) return true; // Return true if tree is empty
-        if(dfs(curr) == false) return false; // Cycle detection
+        if(dfs(curr) == false) return false; // Cycle detection and checks if parent pointer of child is same as node
         curr = curr.right;
         Dictionary minn = new AVLTree(-2147483648, -2147483648, -2147483648); // Set initial minimum to the minimum integer possible
         Dictionary maxx = new AVLTree(2147483647, 2147483647, 2147483647); // Set initial maximum to the maximum integer possible

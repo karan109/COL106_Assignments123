@@ -17,7 +17,6 @@ public class A2DynamicMem extends A1DynamicMem {
     public void Defragment() {
         if(this.freeBlk == null) return;
         Tree address; Tree init;
-        // address = new BSTree();
         if(type == 2) address = new BSTree();
         else address = new AVLTree();
         int count = 0;

@@ -60,11 +60,10 @@ public class BSTree extends Tree {
         else if(comp == 3) return findNode(curr.right, e, ref);
         return null;
     }
-    private BSTree findMin(BSTree curr){if(curr.left != null) return findMin(curr.left);return curr;}
+    private BSTree findMin(BSTree curr){if(curr==null)return null;if(curr.left != null) return findMin(curr.left);return curr;}
     private BSTree findGreater(BSTree curr, int key){
         if(curr == null) return null;
         if(curr.key < key) return findGreater(curr.right, key);
-        // if(curr.key == key) return curr;
         BSTree temp = findGreater(curr.left, key);
         if(temp == null) return curr;
         return temp;
@@ -137,6 +136,7 @@ public class BSTree extends Tree {
         if(this == null) return false;
         if(this.parent == null && this.right == null) return false;
         BSTree curr = this.getRoot(), root = curr;
+        if(curr.right == null) return false;
         if(curr.parent == null) curr = curr.right;
         BSTree target = findNode(curr, e, false);
         if(target == null) return false;
@@ -153,6 +153,7 @@ public class BSTree extends Tree {
         if(this == null) return null;
         if(this.parent == null && this.right == null) return null;
         BSTree curr = this.getRoot();
+        if(curr.right == null) return null;
         if(curr.parent == null) curr = curr.right;
         if(!exact) return findGreater(curr, key);
         else return findExactKey(curr, key);
@@ -163,8 +164,10 @@ public class BSTree extends Tree {
         if(this == null) return null;
         if(this.parent == null && this.right == null) return null;
         BSTree curr = this.getRoot();
+        if(curr.right == null) return null;
         if(curr.parent == null) curr = curr.right;
-        return findMin(curr);
+        if(curr != null) return findMin(curr);
+        return null;
     }
 
     public BSTree getNext()
@@ -198,7 +201,7 @@ public class BSTree extends Tree {
         if(curr.key != -1 || curr.address != -1 || curr.size != -1) return false; // Sentinel node values are checked
         if(curr.left != null) return false; // Sentinel node has no left pointer
         if(curr.right == null) return true; // Return true if tree is empty
-        if(dfs(curr) == false) return false; // Cycle detection
+        if(dfs(curr) == false) return false; // Cycle detection and checks if parent pointer of child is same as node
         curr = curr.right;
         Dictionary minn = new BSTree(-2147483648, -2147483648, -2147483648); // Set initial minimum to the minimum integer possible
         Dictionary maxx = new BSTree(2147483647, 2147483647, 2147483647); // Set initial maximum to the maximum integer possible
