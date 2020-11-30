@@ -44,5 +44,4 @@ public abstract class Dictionary {
 
      public abstract boolean sanity();
           // Checks the sanity of the dictionary and returns true if sane, false otherwise
-     public abstract void print();
 }

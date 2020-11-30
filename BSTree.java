@@ -3,8 +3,8 @@
 
 public class BSTree extends Tree {
 
-    public BSTree left, right;     // Children.
-    public BSTree parent;          // Parent pointer.
+    private BSTree left, right;     // Children.
+    private BSTree parent;          // Parent pointer.
         
     public BSTree(){  
         super();
@@ -207,11 +207,5 @@ public class BSTree extends Tree {
         Dictionary maxx = new BSTree(2147483647, 2147483647, 2147483647); // Set initial maximum to the maximum integer possible
         if(checkBST(curr, minn, maxx) == false) return false; // Checks for the BST property and duplicates
         return true;
-    }
-    public void print(){
-        for(Tree curr = this.getFirst(); curr != null; curr = curr.getNext()){
-            System.out.println("Address: "+curr.address+" Size: "+curr.size+" Key: "+curr.key);
-        }
-        System.out.println();
     }
 }

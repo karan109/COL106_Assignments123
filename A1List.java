@@ -3,8 +3,8 @@
 
 public class A1List extends List {
 
-    public A1List  next; // Next Node
-    public A1List prev;  // Previous Node 
+    private A1List  next; // Next Node
+    private A1List prev;  // Previous Node 
 
     public A1List(int address, int size, int key) { 
         super(address, size, key);
@@ -137,11 +137,5 @@ public class A1List extends List {
         if(curr.prev != head) return false;
 
         return true;
-    }
-    public void print(){
-        for(A1List curr = this.getFirst();curr!= null;curr = curr.getNext()){
-            System.out.println("Address: "+curr.address+" Size: "+curr.size+" Key: "+curr.key);
-        }
-        System.out.println();
     }
 }
